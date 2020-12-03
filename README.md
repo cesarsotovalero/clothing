@@ -17,7 +17,9 @@
 
 The coordinates of the cut point for the pattern. 
 
+The following figure shows the previously described pattern with two aperture angles: `15` and `30`.
 
+![Example of a pattern](https://github.com/cesarsotovalero/clothing/blob/master/pattern.png)
 
 
 
