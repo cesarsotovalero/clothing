@@ -1,6 +1,5 @@
 package se.kth;
 
-
 /**
  * A line, defined as: y = mx + n
  */

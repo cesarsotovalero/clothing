@@ -4,34 +4,43 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.Optional;
 
+/**
+ * A Pattern is as a polygon, a vanishing point, and the aperture angle.
+ */
 public class Pattern {
 
-    Polygon polygon;
+    private final Polygon polygon;
+    private final Point2D.Double vanishingPoint;
+    private final double apertureAngle;
 
     /**
      * Ctor.
-     * @param polygon A {@link se.kth.Polygon}.
+     *
+     * @param polygon A {@link se.kth.Polygon}
+     * @param vanishingPoint A vanishing point {@link java.awt.geom.Point2D}
+     * @param apertureAngle The angle with respect to the the x-axis
      */
-    public Pattern(Polygon polygon) {
+    public Pattern(Polygon polygon, Point2D.Double vanishingPoint, double apertureAngle) {
         this.polygon = polygon;
+        this.vanishingPoint = vanishingPoint;
+        this.apertureAngle = apertureAngle;
     }
 
     /**
      * Creates an angular cut in a {@link se.kth.Polygon}
      *
-     * @param vanishingPoint A {@link java.awt.geom.Point2D}
-     * @param apertureAngle The angle with respect to the the x-axis
      * @return A {@link java.awt.geom.Point2D}, the cut point of the {@link se.kth.Polygon}
      */
-    public Optional<Point2D.Double> createAngularCut(Point2D.Double vanishingPoint, double apertureAngle) {
+    public Optional<Point2D.Double> createAngularCut() {
         Line line1 = line(apertureAngle, vanishingPoint);
         Optional<Point2D.Double> cutPoint = Optional.empty();
         for (Line2D l : polygon.lines()) {
             Line cutLine = new Line(l.getX1(), l.getY1(), l.getX2(), l.getY2());
             cutPoint = intersectionPoint(line1, cutLine);
-            if(cutPoint.isPresent() && cutPoint.get().getX() >=0 && cutPoint.get().getY() >= 0){
-                System.out.printf("Intercept with line %s in the polygon is (%f, %f)%n",
-                        cutLine.toString(), cutPoint.get().getX(), cutPoint.get().getY());
+            if (cutPoint.isPresent() && cutPoint.get().getX() >= 0 && cutPoint.get().getY() >= 0) {
+                System.out.printf("Intercept with line %s in the pattern is (%f, %f)%n",
+                        cutLine.toString(), cutPoint.get().getX(), cutPoint.get().getY()
+                                 );
                 return cutPoint;
             }
         }
@@ -70,11 +79,3 @@ public class Pattern {
         return Optional.of(point);
     }
 }
-
-
-
-
-
-
-
-

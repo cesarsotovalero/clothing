@@ -13,7 +13,6 @@ class PatternTest {
 
     @Test
     void testCreateAngularCut() {
-
         // Create a polygon defined by the following lines (ordered clockwise form the bottom left point):
         // (-3, -2), (2, -2);
         // (2, -2), (3, 3);
@@ -32,8 +31,11 @@ class PatternTest {
         // Aperture angle
         int apertureAngle = 45;
 
+        // A pattern
+        Pattern pattern = new Pattern(polygon, vanishingPoint, apertureAngle);
+
         // Get the cut point based on the vanishing point and angle
-        Optional<Point2D.Double> cutPoint = new Pattern(polygon).createAngularCut(vanishingPoint, apertureAngle);
+        Optional<Point2D.Double> cutPoint = pattern.createAngularCut();
         Point2D.Double output = new Point2D.Double(3, 3);
 
         Assertions.assertTrue(cutPoint.isPresent());
